@@ -22,8 +22,8 @@ export default class App extends Component {
           imgperfil:
             "https://sujeitoprogramador.com/instareact/fotoPerfil1.png",
           imgPublicacao: "https://sujeitoprogramador.com/instareact/foto1.png",
-          likeada: false,
-          likers: 0,
+          likeada: true,
+          likers: 1,
         },
         {
           id: "2",
@@ -33,7 +33,7 @@ export default class App extends Component {
             "https://sujeitoprogramador.com/instareact/fotoPerfil2.png",
           imgPublicacao: "https://sujeitoprogramador.com/instareact/foto2.png",
           likeada: false,
-          likers: 0,
+          likers: 6,
         },
         {
           id: "3",

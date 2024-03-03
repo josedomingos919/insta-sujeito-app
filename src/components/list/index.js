@@ -10,6 +10,48 @@ export default class List extends Component {
     this.state = {
       feed: this.props.data,
     };
+
+    this.like = this.like.bind(this);
+    this.showLikes = this.showLikes.bind(this);
+  }
+
+  showLikes(likers) {
+    if (likers <= 0) {
+      return;
+    }
+
+    return (
+      <Text style={styles.likesText}>
+        {likers} {likers > 1 ? "curtidas" : "curtida"}
+      </Text>
+    );
+  }
+
+  like() {
+    let feed = this.state.feed;
+
+    if (feed.likeada) {
+      this.setState({
+        feed: {
+          ...feed,
+          likeada: false,
+          likers: feed?.likers - 1,
+        },
+      });
+    } else {
+      this.setState({
+        feed: {
+          ...feed,
+          likeada: true,
+          likers: feed?.likers + 1,
+        },
+      });
+    }
+  }
+
+  getLikeIcon(likeada) {
+    if (likeada) return require("./../../img/likeada.png");
+    else return require("./../../img/like.png");
   }
 
   render() {
@@ -28,10 +70,10 @@ export default class List extends Component {
           source={{ uri: this.state.feed.imgPublicacao }}
         />
         <View style={styles.postContainer}>
-          <TouchableOpacity style={styles.buttonLike}>
+          <TouchableOpacity onPress={this.like} style={styles.buttonLike}>
             <Image
               style={styles.likeIcon}
-              source={require("./../../img/like.png")}
+              source={this.getLikeIcon(this.state.feed.likeada)}
             />
           </TouchableOpacity>
           <TouchableOpacity>
@@ -41,6 +83,7 @@ export default class List extends Component {
             />
           </TouchableOpacity>
         </View>
+        {this.showLikes(this.state.feed.likers)}
         <View style={styles.footer}>
           <Text style={styles.footerName}>{this.state.feed.nome}</Text>
           <Text style={styles.footerDescription}>
@@ -102,5 +145,9 @@ const styles = StyleSheet.create({
   sendIcon: { width: 33, height: 33 },
   buttonLike: {
     marginRight: 5,
+  },
+  likesText: {
+    fontWeight: "bold",
+    marginLeft: 5,
   },
 });
